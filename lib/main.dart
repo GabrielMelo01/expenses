@@ -62,10 +62,13 @@ class MyHomePage extends StatelessWidget {
                         )
                       ),
                       padding: EdgeInsets.all(10),
-                      child: Row(
-                        children: [
-                          Text(e.value.toString())
-                        ],
+                      child: Text(
+                          e.value.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.purple
+                          ),
                       ),
                     ),
                     Column(
