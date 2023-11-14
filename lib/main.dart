@@ -51,7 +51,22 @@ class MyHomePage extends StatelessWidget {
                 child: Row(
                   children:[
                     Container(
-                      child: Text(e.value.toString()),
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 10
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2
+                        )
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          Text(e.value.toString())
+                        ],
+                      ),
                     ),
                     Column(
                       children: [
