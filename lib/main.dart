@@ -1,6 +1,7 @@
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(ExpensesApp());
@@ -14,6 +15,10 @@ class ExpensesApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
+
   final _transactions = [
     Transaction(
         id: 't1',
@@ -34,7 +39,6 @@ class MyHomePage extends StatelessWidget {
         title: Text('Despesas Pessoais'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -51,7 +55,7 @@ class MyHomePage extends StatelessWidget {
                 child: Row(
                   children:[
                     Container(
-                      margin: EdgeInsets.symmetric(
+                      margin: const EdgeInsets.symmetric(
                         horizontal: 15,
                         vertical: 10
                       ),
@@ -64,7 +68,7 @@ class MyHomePage extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       child: Text(
                           'R\$ ${e.value.toStringAsFixed(2)}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                             color: Colors.purple
@@ -76,13 +80,14 @@ class MyHomePage extends StatelessWidget {
                       children: [
                         Text(
                             e.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16
                             ),
                         ),
-                        Text(e.date.toString(),
-                          style: TextStyle(
+                        Text(
+                          DateFormat('d MMM y').format(e.date),
+                          style: const TextStyle(
                             color: Colors.grey
                           ),
                         )
@@ -92,6 +97,43 @@ class MyHomePage extends StatelessWidget {
                 ),
               );
             }).toList(),
+          ),
+          Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+             child: Column(
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Título',
+                    ),
+                  ),
+                  TextField(
+                    controller: valueController,
+                    decoration: const InputDecoration(
+                      labelText: 'Valor (R\$)',
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.purple
+                        ),
+                        onPressed: () {
+                          print(titleController.text);
+                          print(valueController.text);
+                        },
+                        child: Icon(Icons.add_circle),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )
           )
         ],
       ),
