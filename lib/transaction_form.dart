@@ -11,6 +11,15 @@ class TransactionForm extends StatelessWidget {
 
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  _submitForm() {
+    final title = titleController.text;
+    final value = double.parse(valueController.text);
+    if(title.isEmpty || value <= 0) {
+      return;
+    }
+    onSubmit(title, value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,7 +41,8 @@ class TransactionForm extends StatelessWidget {
                   decoration: const InputDecoration(
                     labelText: 'Valor (R\$)',
                   ),
-                  keyboardType: TextInputType.datetime,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onFieldSubmitted: (_) => _submitForm(),
                   // validator: (value) {
                   //   if(value!.isEmpty) {
                   //     return "Campo nao pode ser vazio!";
@@ -45,14 +55,7 @@ class TransactionForm extends StatelessWidget {
                   children: [
                     TextButton(
                       style: TextButton.styleFrom(primary: Colors.purple),
-                      onPressed: () {
-                        onSubmit(titleController.text, double.parse(valueController.text));
-                        // print(titleController.text);
-                        // print(valueController.text);
-                        // if(formKey.currentState!.validate()) {
-                        //   print("Deu certo!");
-                        // }
-                      },
+                      onPressed: _submitForm,
                       child: Icon(Icons.add_circle),
                     )
                   ],
