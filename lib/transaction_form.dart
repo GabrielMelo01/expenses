@@ -1,23 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
-
+class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit;
 
   TransactionForm(this.onSubmit);
 
-  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
 
+class _TransactionFormState extends State<TransactionForm> {
+  final titleController = TextEditingController();
+
+  final valueController = TextEditingController();
+
+  // GlobalKey<FormState> formKey = GlobalKey<FormState>();
   _submitForm() {
     final title = titleController.text;
-    final value = double.parse(valueController.text);
+    final value = double.parse(valueController.text.replaceAll(",", "."));
     if(title.isEmpty || value <= 0) {
       return;
     }
-    onSubmit(title, value);
+    widget.onSubmit(title, value);
   }
 
   @override
