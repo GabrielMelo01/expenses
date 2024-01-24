@@ -20,16 +20,19 @@ class Transaction_list extends StatelessWidget {
               children: [
                 Container(
                   margin:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.purple, width: 2)),
+                      border: Border.all(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 2,
+                  )),
                   padding: EdgeInsets.all(10),
                   child: Text(
                     'R\$ ${e.value.toStringAsFixed(2)}',
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.purple),
+                        color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
                 Column(
@@ -37,8 +40,9 @@ class Transaction_list extends StatelessWidget {
                   children: [
                     Text(
                       e.title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16),
+                      style: Theme.of(context).textTheme.titleLarge,
+                      // style: TextStyle(
+                      //     fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     Text(
                       DateFormat('d MMM y').format(e.date),
