@@ -1,3 +1,4 @@
+import 'package:expenses/chart_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,9 +25,6 @@ class Chart extends StatelessWidget {
         }
       }
 
-      print(DateFormat.E().format(weekDay)[0]);
-      print(totalSum);
-
       return {
         'day': DateFormat.E().format(weekDay)[0],
         'value': totalSum,
@@ -34,17 +32,38 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get _weekTotalValue {
+    return groupedTransactions.fold(0.0, (sum, tr) {
+      if (tr['value'] is double) {
+        return sum + (tr['value'] as double);
+      } else {
+        // Trate o caso em que o valor não é um double
+        return sum;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    groupedTransactions;
     return Container(
       child: Card(
         elevation: 6,
         margin: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            Text('Gráfico'),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactions.map((e) {
+              return Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                  label: e['day'].toString(),
+                  value: e['value'] as double,
+                  percentage: _weekTotalValue == 0 ? 0 : (e['value'] as double) / _weekTotalValue,
+                ),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

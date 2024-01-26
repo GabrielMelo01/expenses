@@ -23,9 +23,9 @@ class ExpensesApp extends StatelessWidget {
         ),
         textTheme: tema.textTheme.copyWith(
           headline6: const TextStyle(
-            fontFamily: 'ZhiMangXing',
-            fontSize: 25,
-            fontWeight: FontWeight.normal,
+            fontFamily: 'Quicksand',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
@@ -89,14 +89,31 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop();
   }
 
+  // _openTransactionFormModal(BuildContext context) {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (_) {
+  //       return TransactionForm(_addTransaction);
+  //     },
+  //   );
+  // }
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (_) {
-        return TransactionForm(_addTransaction);
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: TransactionForm(_addTransaction),
+          ),
+        );
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
