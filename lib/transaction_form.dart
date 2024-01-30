@@ -55,14 +55,30 @@ class _TransactionFormState extends State<TransactionForm> {
                   // },
                   autovalidateMode: AutovalidateMode.always,
                 ),
+                Container(
+                  height: 70,
+                  child: Row(
+                    children: [
+                      const Text('Nenhuma data selecionada!'),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Selecionar Data',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    TextButton(
-                      style: TextButton.styleFrom(primary: Colors.purple),
+                    ElevatedButton(
                       onPressed: _submitForm,
-                      child: Icon(Icons.add_circle),
-                    )
+                      child: const Text('Nova Transação'),
+                    ),
                   ],
                 )
               ],

@@ -45,7 +45,7 @@ class Transaction_list extends StatelessWidget {
                       radius: 30,
                       child: Padding(
                         padding: const EdgeInsets.all(6),
-                        child: FittedBox(child: Text('R\$${e.value.toStringAsFixed(2).replaceAll(".", ",")}')),
+                        child: FittedBox(child: Text('R\$ ${e.value.toStringAsFixed(2).replaceAll(".", ",")}')),
                       ),
                     ),
                     title: Text(
