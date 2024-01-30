@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmit;
@@ -11,18 +12,33 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
-
-  final valueController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _valueController = TextEditingController();
+  DateTime? _selectedDate;
 
   // GlobalKey<FormState> formKey = GlobalKey<FormState>();
   _submitForm() {
-    final title = titleController.text;
-    final value = double.parse(valueController.text.replaceAll(",", "."));
-    if(title.isEmpty || value <= 0) {
+    final title = _titleController.text;
+    final value = double.parse(_valueController.text.replaceAll(",", "."));
+    if (title.isEmpty || value <= 0) {
       return;
     }
     widget.onSubmit(title, value);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2021),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      setState(() {
+        _selectedDate = value;
+        print(_selectedDate);
+      });
+    });
+    print('Executado!');
   }
 
   @override
@@ -36,13 +52,13 @@ class _TransactionFormState extends State<TransactionForm> {
             child: Column(
               children: [
                 TextField(
-                  controller: titleController,
+                  controller: _titleController,
                   decoration: const InputDecoration(
                     labelText: 'Título',
                   ),
                 ),
                 TextFormField(
-                  controller: valueController,
+                  controller: _valueController,
                   decoration: const InputDecoration(
                     labelText: 'Valor (R\$)',
                   ),
@@ -59,9 +75,15 @@ class _TransactionFormState extends State<TransactionForm> {
                   height: 70,
                   child: Row(
                     children: [
-                      const Text('Nenhuma data selecionada!'),
+                      Expanded(
+                        child: Text(
+                          _selectedDate == null
+                              ? 'Nenhuma data selecionada!'
+                              : 'Data Selecionada: ${DateFormat('dd/MM/y').format(_selectedDate!)}',
+                        ),
+                      ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: _showDatePicker,
                         child: const Text(
                           'Selecionar Data',
                           style: TextStyle(
