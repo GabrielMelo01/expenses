@@ -18,7 +18,7 @@ class ExpensesApp extends StatelessWidget {
       home: MyHomePage(),
       theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
-          primary: Colors.purple,
+          primary: Colors.purple[500],
           secondary: Colors.amber,
         ),
         textTheme: tema.textTheme.copyWith(
@@ -88,10 +88,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
-      id: Random().nextDouble().toString(),
-      title: title,
-      value: value,
-      date: date);
+        id: Random().nextDouble().toString(),
+        title: title,
+        value: value,
+        date: date);
 
     setState(() {
       _transactions.add(newTransaction);
@@ -133,9 +133,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final avaliableHeight = MediaQuery.of(context).size.height -
+        AppBar().preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Despesas Pessoais'),
+        title: Text('Despesas Pessoais',
+            style: TextStyle(
+              fontSize: 20 * MediaQuery.of(context).textScaleFactor,
+            )),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -147,8 +154,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            Transaction_list(_recentTransactions, _removeTransaction),
+            Container(
+              child: Chart(_recentTransactions),
+              height: avaliableHeight * 0.30,
+            ),
+            Container(
+              height: avaliableHeight * 0.70,
+              child: Transaction_list(_recentTransactions, _removeTransaction),
+            ),
           ],
         ),
       ),
